@@ -1,0 +1,30 @@
+form {
+    margin-top: 100px;
+}
+
+form input {
+    width: 500px;
+    height: 40px;
+    font-size: 25px;
+    border-radius: 5px;
+    color: #0d6efd;
+    margin-bottom: 30px;
+}
+
+form p {
+    font-size: 20px;
+    margin-right: 400px;
+}
+
+form button {
+    border: 0;
+    width: 500px;
+    height: 40px;
+    font-size: 25px;
+    border-radius: 10px;
+    background-color: #0d6efd;
+}
+
+form button:hover {
+    background-color: #1762d2;
+}
