@@ -8,4 +8,17 @@ div button {
     border: 0;
     border-radius: 10px;
     font-size: 20px;
+    background-color: #0d6efd;
+}
+
+div button a {
+    text-decoration: none;
+}
+
+div button:hover {
+    background-color: #1762d2;
+}
+
+div img {
+    width: 100px;
 }

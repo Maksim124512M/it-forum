@@ -12,15 +12,33 @@
 </head>
 <body>
     <header class="bg-primary">
-        <h1 class="text-white">ITLeague</h1>
+        <h1 class="text-white">Forum</h1>
         <ul class="text-white">
-            <li><a href="">Home</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="">About us</a></li>
             <li><a href="">Contacts</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li><a href="{% url 'signup' %}">Signup</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'add_article' %}">Add Article</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Signup</a></li>
+            {% endif %}
         </ul>
     </header>
+    <div>
+        <ul class="text-center">
+            <li><a href="{% url 'home' %}" class="text-primary">All</a></li>
+            <li><a href="{% url 'webdev' %}" class="text-primary">WEB Develompent</a></li>
+            <li><a href="{% url 'gamedev' %}" class="text-primary">Gamedev</a></li>
+            <li><a href="{% url 'android' %}" class="text-primary">Mobile Develompent</a></li>
+            <li><a href="{% url 'data_science' %}" class="text-primary">Data Science</a></li>
+            <li><a href="{% url 'machine_learning' %}" class="text-primary">Machine Learning</a></li>
+            <li><a href="{% url 'devops' %}" class="text-primary">DevOps</a></li>
+            <li><a href="{% url 'cyber_security' %}" class="text-primary">Cyber security</a></li>
+            <li><a href="{% url 'testing' %}" class="text-primary">Testing</a></li>
+        </ul>
+    </div>
     {% block body %}
     {% endblock %}
 </body>

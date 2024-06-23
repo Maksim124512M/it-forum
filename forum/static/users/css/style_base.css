@@ -30,3 +30,23 @@ li a {
 li a:hover {
     color: rgb(171, 171, 171);
 }
+
+div ul {
+    list-style: none;
+    display: flex;
+    margin-top: 20px;
+    margin-left: -30px;
+    font-size: 20px;
+}
+
+div ul li {
+    display: inline-block;
+    margin-top: 30px;
+    padding-left: 72.5px;
+}
+
+div ul li a {
+    position: relative;
+    bottom: 22px;
+    left: 0px;
+}
