@@ -1,10 +1,14 @@
-from django.forms import BaseModelForm
-from django.http import HttpResponse
 from django.views import generic
+from django.urls import reverse_lazy
+
+from rest_framework.viewsets import ModelViewSet
+
 from .models import Article, Comment
 from .forms import AddCommentForm
+from .serializers import ArticleSerializer
+from .permissions import IsAdminOrReadOnly
+from .services import *
 from users.models import Profile
-from django.urls import reverse_lazy
 
 
 class HomeView(generic.ListView):
@@ -19,7 +23,8 @@ class WebDevView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='web')
+        return filter_article('web')
+        
     
 
 class GameDevView(generic.ListView):
@@ -28,7 +33,7 @@ class GameDevView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='gamedev')
+        return filter_article('gamedev')
     
 
 class AndroidView(generic.ListView):
@@ -37,7 +42,7 @@ class AndroidView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='android')
+        return filter_article('android')
 
 
 class DataScienceView(generic.ListView):
@@ -46,7 +51,7 @@ class DataScienceView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='data_science')
+        return filter_article('data_science')
     
 
 class MachileLearningView(generic.ListView):
@@ -55,7 +60,7 @@ class MachileLearningView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='ml')
+        return filter_article('ml')
     
 
 class DevopsView(generic.ListView):
@@ -64,7 +69,7 @@ class DevopsView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='devops')
+        return filter_article('devops')
     
 
 class CyberSecurityView(generic.ListView):
@@ -73,7 +78,7 @@ class CyberSecurityView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='cyber_security')
+        return filter_article('cyber_security')
     
 
 class TestingView(generic.ListView):
@@ -82,7 +87,7 @@ class TestingView(generic.ListView):
     context_object_name = 'articles'
 
     def get_queryset(self):
-        return self.model.objects.filter(category='testing')
+        return filter_article('testing')
     
 
 class AddArticleView(generic.CreateView):
@@ -105,15 +110,15 @@ class ArticleDetailView(generic.DetailView, generic.FormView):
     success_url = '/'
 
     def get_context_data(self, **kwargs):
-        context = super(ArticleDetailView, self).get_context_data(**kwargs)
-        context['title'] = Article.objects.get(id=self.kwargs['pk'])
-        context['comments'] = Comment.objects.filter(article=self.kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['title'] = get_article(self.kwargs['pk'])
+        context['comments'] = Comment.objects.filter(article=self.kwargs['pk']).select_related('author')
 
         return context
     
     def form_valid(self, form):
-        form.instance.article = Article.objects.get(id=self.kwargs['pk'])
-        form.instance.author = Profile.objects.get(user=self.request.user)
+        form.instance.article = get_article(self.kwargs['pk'])
+        form.instance.author = Profile.objects.get(user=self.request.user).select_related('user')
         form.save()
         return super().form_valid(form)
     
@@ -135,8 +140,8 @@ class ArticleDeleteView(generic.DeleteView):
     template_name = 'forum/delete_article.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ArticleDeleteView, self).get_context_data(**kwargs)
-        context['article'] = Article.objects.get(id=self.kwargs['pk'])
+        context = super().get_context_data(**kwargs)
+        context['article'] = get_article(self.kwargs['pk'])
 
         return context
 
@@ -149,3 +154,9 @@ class CommentUpdateView(generic.UpdateView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all().select_related('author')
+    serializer_class = ArticleSerializer
+    permission_classes = (IsAdminOrReadOnly, )

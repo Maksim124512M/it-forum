@@ -15,5 +15,7 @@
         <hr>
         <img src="{{ i.image.url }}">
     </div>
+{% empty %}
+    <h2 class="text-primary mt-5 text-center">No posts</h2>
 {% endfor %}
 {% endblock %}

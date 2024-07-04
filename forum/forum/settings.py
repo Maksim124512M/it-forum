@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os
 from dotenv import load_dotenv, find_dotenv
+
+import os
 
 load_dotenv(find_dotenv())
 
@@ -29,9 +30,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 LOGIN_REDIRECT_URL ='profile'
+
 LOGIN_URL = 'login'
 
 # Application definition
@@ -43,9 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'debug_toolbar',
     'forum_app.apps.ForumAppConfig',
     'users.apps.UsersConfig',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,9 +60,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+
 ROOT_URLCONF = 'forum.urls'
+
 
 TEMPLATES = [
     {
@@ -90,6 +103,13 @@ DATABASES = {
         'HOST': os.getenv('HOST'),
         'PORT': os.getenv('PORT'),
     }
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ]
 }
 
 

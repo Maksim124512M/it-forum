@@ -1,7 +1,13 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
+from rest_framework.routers import SimpleRouter
+
+from . import views
+
+router = SimpleRouter()
+router.register('api/users', views.ArticleViewSet)
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
@@ -17,8 +23,10 @@ urlpatterns = [
     path('article/<int:pk>', views.ArticleDetailView.as_view(), name='article_detail'),
     path('articles/update/<int:pk>', views.ArticleUpdateView.as_view(), name='article_update'),
     path('article/delete/<int:pk>', views.ArticleDeleteView.as_view(), name='article_delete'),
-    path('comment/update/<int:pk>', views.CommentUpdateView.as_view(), name='comment_update')
+    path('comment/update/<int:pk>', views.CommentUpdateView.as_view(), name='comment_update'),
 ]
+
+urlpatterns += router.urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

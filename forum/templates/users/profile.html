@@ -12,22 +12,19 @@
     <img src="{{ profile.image.url }}">
     <h1 class="text-primary">{{ user.username }}</h1>
     <p class="text-primary">{{ user.email }}</p>
-    <p class="text-primary">Profile image</p>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.image }}<br>
-        <button type="submit" class="text-white mt-3">Change image</button>
-    </form>
+
     <form action="{% url 'logout' %}" method="post" class="mt-5">
         {% csrf_token %}
         <button type="submit" class="text-white">Logout</button>
     </form>
+
     {% for i in articles %}
         <h2 class="text-primary mt-5">My posts</h2>
-        <h3 class="mt-5 text-primary">{{ i.title }}</h3>
-        <a href="{{ i.get_absolute_url }}" class="text-white"><button class="text-white">View</button></a>
+        <a href="{{ i.get_absolute_url }}" class="text-white"><h3 class="mt-5 text-primary">{{ i.title }}</h3></a>
         <a href="{% url 'article_update' i.id %}" class="text-white"><button class="text-white">Edit</button></a>
         <a href="{% url 'article_delete' i.id %}" class="text-white"><button class="text-white">Delete</button></a>
+    {% empty %}
+        <h2 class="text-primary mt-5">You haven't any posts</h2>
     {% endfor %}
 </div>
 {% endblock %}
