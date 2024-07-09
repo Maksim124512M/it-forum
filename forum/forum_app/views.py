@@ -15,6 +15,7 @@ class HomeView(generic.ListView):
     model = Article
     template_name = 'forum/home.html'
     context_object_name = 'articles'
+    ordering = ['-date']
 
 
 class WebDevView(generic.ListView):
@@ -112,7 +113,7 @@ class ArticleDetailView(generic.DetailView, generic.FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = get_article(self.kwargs['pk'])
-        context['comments'] = Comment.objects.filter(article=self.kwargs['pk']).select_related('author')
+        context['comments'] = Comment.objects.filter(article=self.kwargs['pk']).order_by('-date').select_related('author')
 
         return context
     

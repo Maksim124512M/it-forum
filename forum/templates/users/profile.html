@@ -18,8 +18,8 @@
         <button type="submit" class="text-white">Logout</button>
     </form>
 
+    
     {% for i in articles %}
-        <h2 class="text-primary mt-5">My posts</h2>
         <a href="{{ i.get_absolute_url }}" class="text-white"><h3 class="mt-5 text-primary">{{ i.title }}</h3></a>
         <a href="{% url 'article_update' i.id %}" class="text-white"><button class="text-white">Edit</button></a>
         <a href="{% url 'article_delete' i.id %}" class="text-white"><button class="text-white">Delete</button></a>

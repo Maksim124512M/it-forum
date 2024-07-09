@@ -23,7 +23,7 @@ class Article(models.Model):
     text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.CharField(max_length=30, choices=CATEGORIES, default='all')
-    date = models.DateTimeField(default=now())
+    date = models.DateField(default=now())
 
     def __str__(self):
         return self.title
@@ -34,14 +34,13 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Article'
         verbose_name_plural = 'Articles'
-        ordering = ('-date',)
 
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     text = models.CharField(max_length=1000)
-    date = models.DateTimeField(default=now())
+    date = models.DateField(default=now())
 
     def __str__(self):
         return f'Comment for lesson "{self.article.title}"'
@@ -52,4 +51,3 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'Comment'
         verbose_name_plural = 'Comments'
-        ordering = ('-date',)

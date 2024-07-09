@@ -1,14 +1,3 @@
-div h3 {
-    position: absolute;
-    top: 31%;
-    margin-left: 20px;
-}
-
-li button:hover {
-    background-color: rgb(0, 255, 217);
-    transition-duration: 500ms;
-}
-
 .article {
     border: 1px solid black;
     width: 800px;
@@ -21,12 +10,12 @@ li button:hover {
 .article h2 {
     position: relative;
     margin-left: 20px;
-    top: 80px;
+    top: 30px;
 }
 
 .article hr {
     position: relative;
-    top: 80px;
+    top: 20px;
 }
 
 .article a {
@@ -34,9 +23,9 @@ li button:hover {
 }
 
 .article img {
-    margin-top: 100px;
+    margin-top: 40px;
     width: 798.5px;
-    height: 427px;
+    height: 487px;
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
 }

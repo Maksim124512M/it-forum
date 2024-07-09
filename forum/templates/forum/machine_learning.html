@@ -11,7 +11,6 @@
 
 {% for i in articles %}
     <div class="article">
-        <h3>{{ i.author }}</h3>
         <h2><a href="{% url 'article_detail' i.id %}">{{ i.title }}</a></h2>
         <hr>
         <img src="{{ i.image.url }}">

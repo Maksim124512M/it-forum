@@ -27,3 +27,7 @@ class ProfileView(LoginRequiredMixin, generic.ListView):
         context['profile'] = Profile.objects.get(user=self.request.user)
 
         return context
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
