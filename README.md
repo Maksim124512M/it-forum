@@ -1,6 +1,6 @@
 # ITLeague
 This is repository of simple forum, where people can add articles on the different topics
-# Technilogies
+# Technologies
 * Python
 * Django
 * Django REST framework
@@ -14,7 +14,7 @@ This is repository of simple forum, where people can add articles on the differe
 
 `venv/bin/activate` - if you have Linux or Mac 
 
-`pip install -r requirements.txt` - installing required technologies  
+`pip install -r requirements.txt` - installing required libraries and frameworks
 
 `cd forum` - go to the site folder  
 
